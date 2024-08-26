@@ -1,0 +1,11 @@
+
+###> symfony/framework-bundle ###
+/med_appointment_backend/.env
+/med_appointment_backend/.env.local
+/med_appointment_backend/.env.local.php
+/med_appointment_backend/.env.*.local
+/med_appointment_backend/config/secrets/prod/prod.decrypt.private.php
+/med_appointment_backend/public/bundles/
+/med_appointment_backend/var/
+/med_appointment_backend/vendor/
+###< symfony/framework-bundle ###

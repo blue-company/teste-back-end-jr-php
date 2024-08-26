@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Beneficiario;
+use App\Repository\BeneficiarioRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-
-use App\Entity\Beneficiario;
-use App\Repository\BeneficiarioRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class BeneficiarioController extends AbstractController
 {

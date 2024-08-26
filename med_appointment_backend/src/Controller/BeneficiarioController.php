@@ -78,7 +78,7 @@ class BeneficiarioController extends AbstractController
     {
         $beneficiario = $repository->find($id);
         if(!$beneficiario){
-            return new JsonResponse('error', 'Beneficiário não existe', 404);
+            return new JsonResponse(['error' => 'Beneficiário não existe'], 404);
         }
 
         $entityManager->remove($beneficiario);

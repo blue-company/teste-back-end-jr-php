@@ -1,103 +1,115 @@
-# Descrição do Teste
+# Sistema de Gerenciamento de Consultas Médicas
+<img alt="Tamanho do repositório" src="https://img.shields.io/github/repo-size/elizalap/teste-back-end-jr-php">
+<img alt="último commit" src="https://img.shields.io/github/last-commit/elizalap/teste-back-end-jr-php">
 
-Crie uma aplicação PHP que gerencie um sistema de consultas médicas. A aplicação deve permitir criar, ler, atualizar e deletar registros de beneficiários, médicos, hospitais e consultas.
-Este teste é focado exclusivamente na implementação do backend da aplicação, portanto, não é necessário criar interfaces gráficas ou telas.
+## Descrição do projeto
+Este projeto faz parte de um desafio de código onde crio uma aplicação backend para gerenciar consultas médicas utilizando o framework Symfony.
 
-## Entidades
+O projeto permite criar, listar, atualizar e deletar registros de beneficiários, médicos, hospitais e consultas.
 
-- **Beneficiário**: id, nome, email, data_nascimento
-- **Médico**: id, nome, especialidade, hospital
-- **Hospital**: id, nome, endereco
-- **Consulta**: id, data, status, beneficiario, medico, hospital
+## 🚀 Entidades e Atributos
 
-## Requisitos
+1. **Beneficiário**
+   - `id`: Identificador único.
+   - `nome`: Nome do beneficiário.
+   - `email`: Email do beneficiário.
+   - `data_nascimento`: Data de nascimento do beneficiário.
 
-CRUD para Beneficiário, Médico, Hospital, Consulta:
+2. **Médico**
+   - `id`: Identificador único.
+   - `nome`: Nome do médico.
+   - `especialidade`: Especialidade do médico.
+   - `hospital`: ID do hospital ao qual o médico está associado.
 
-- **Criação**
-  - Método: POST
-- **Listagem**
-  - Método: GET
-- **Atualizar**
-  - Método: PUT
-- **Deletar**
-  - Método: DELETE
+3. **Hospital**
+   - `id`: Identificador único.
+   - `nome`: Nome do hospital.
+   - `endereco`: Endereço do hospital.
 
-## Regras
+4. **Consulta**
+   - `id`: Identificador único.
+   - `data`: Data da consulta.
+   - `status`: Status da consulta (ex.: "Agendada", "Concluída").
+   - `beneficiario`: ID do beneficiário.
+   - `medico`: ID do médico.
+   - `hospital`: ID do hospital.
 
-- **Beneficiário Data nascimento**: Não deverá ser permitido cadastrar beneficiários com idade menor que 18 anos.
-- **Associação de Médico ao Hospital**: Cada médico deve estar associado a um hospital. A aplicação deve garantir que, ao criar ou atualizar um médico, ele seja relacionado a um hospital existente.
-- **Status Consulta**: Após concluída a consulta, ela não poderá ser alterada/excluída.
+## 🛠 Regras de Negócio
 
-## Requisitos obrigatórios
+Aqui estão as regras implementadas:
 
-- Criar a aplicação no padrão MVC;
-- Utilizar `symfony/routing` para as rotas;
-- Utilizar Doctrine ORM;
-- Banco de dados MySQL;
+- [x] Beneficiários devem ter 18 anos ou mais para serem cadastrados.
+- [x] Cada médico precisa estar associado a um hospital existente.
+- [x] Consultas que com status "Concluída" não podem ser alteradas ou excluídas.
 
-## Instruções para entrega
+## 💻 Como rodar o projeto
 
-- Seu código deve estar disponível no GitHub para acesso público.
-- Crie um arquivo `README.md` detalhando como configurar, executar e testar a aplicação.
-- Faça um fork deste repositório para iniciar o desenvolvimento.
+Siga esse passo a passo para colocar a aplicação para rodar na sua máquina:
 
----
+#### 1. Pré-requisitos
 
-# Responsabilidades da Vaga
+Certifique-se de ter instalado:
 
-## Desenvolvimento de Aplicações Web
+- PHP 8.0 ou superior
+- Doctrine ORM
+- Composer
+- MySQL
+- Symfony CLI (opcional)
 
-- Criar e manter aplicações web utilizando o framework Symfony, seguindo o padrão MVC.
-- Implementar funcionalidades de CRUD para diferentes entidades do sistema.
+#### 2. Clonar o repositório
 
-## Gerenciamento de Banco de Dados
+```bash
+git clone https://github.com/elizalap/teste-back-end-jr-php.git
+cd med_appointment_backend
+```
 
-- Utilizar Doctrine ORM para manipulação e gerenciamento do banco de dados.
-- Criar e manter estruturas de banco de dados no MySQL.
+#### 3. Instalar dependências
+```bash
+composer install
+```
 
-## Implementação de Rotas
+#### 4. Configuração do Banco de Dados
+Crie um banco de dados MySQL e configure as credenciais de acesso no arquivo .env:
+```bash
+DATABASE_URL="mysql://username:password@127.0.0.1:3306/nome_do_banco_de_dados"
+```
 
-- Configurar e gerenciar rotas utilizando o componente `symfony/routing`.
+#### 5. Executar migrações
+```bash
+php bin/console doctrine:migrations:migrate
+```
 
-## Validação e Regras de Negócio
+#### 6. Executar a aplicação
+```bash
+symfony server:start
+//ou symfony serve -d --no-tls
+```
 
-- Implementar regras de validação e lógica de negócios.
+## ⚙️ Rotas para testar a aplicação
 
-## Documentação e Testes
+**Beneficiários** 
+- POST /beneficiario: Criar um novo beneficiário.
+- GET /beneficiario: Listar todos os beneficiários.
+- PUT /beneficiario/{id}: Atualizar um beneficiário.
+- DELETE /beneficiario/{id}: Deletar um beneficiário.
 
-- Criar documentação detalhada para configuração, execução e testes da aplicação.
-- Garantir que o código seja bem documentado e testado antes de ser submetido.
+**Médicos**
 
----
+- POST /medico: Criar um novo médico.
+- GET /medico: Listar todos os médicos.
+- PUT /medico/{id}: Atualizar um médico.
+- DELETE /medico/{id}: Deletar um médico.
 
-# Requisitos Desejados da Vaga
+**Hospitais**
 
-## Habilidades Técnicas
+- POST /hospital: Criar um novo hospital.
+- GET /hospital: Listar todos os hospitais.
+- PUT /hospital/{id}: Atualizar um hospital.
+- DELETE /hospital/{id}: Deletar um hospital.
 
-- Experiência com desenvolvimento web utilizando PHP e Symfony.
-- Conhecimento em arquitetura MVC e padrões de desenvolvimento de software.
-- Familiaridade com Doctrine ORM e manipulação de bancos de dados relacionais, especificamente MySQL.
-- Conhecimento em configuração e gerenciamento de rotas com `symfony/routing`.
-- Experiência em manipulação e upload de arquivos, incluindo validação e tratamento de tipos de arquivo.
+**Consultas**
 
-## Regras de Negócio e Validação
-
-- Capacidade de implementar regras de negócios e validações complexas.
-- Experiência com validação de dados de entrada e lógica de aplicação.
-
-## Controle de Versão e Colaboração
-
-- Experiência com sistemas de controle de versão, preferencialmente Git.
-- Capacidade de trabalhar de forma colaborativa e comunicativa dentro de um ambiente de equipe.
-
-## Documentação e Boas Práticas
-
-- Habilidade em criar documentação clara e detalhada.
-- Adesão a boas práticas de codificação, incluindo comentários no código e escrita de testes.
-
-## Outros Requisitos
-
-- Capacidade de resolver problemas de forma eficaz e eficiente.
-- Boa comunicação escrita e verbal.
-- Proatividade e vontade de aprender novas tecnologias e métodos de trabalho.
+- POST /consulta: Criar uma nova consulta.
+- GET /consulta: Listar todas as consultas.
+- PUT /consulta/{id}: Atualizar uma consulta (apenas se não estiver concluída).
+- DELETE /consulta/{id}: Deletar uma consulta (apenas se não estiver concluída).

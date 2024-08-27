@@ -48,7 +48,7 @@ Siga esse passo a passo para colocar a aplicação para rodar na sua máquina:
 
 #### 1. Pré-requisitos
 
-Certifique-se de ter o seguinte instalado:
+Certifique-se de ter instalado:
 
 - PHP 8.0 ou superior
 - Doctrine ORM
@@ -59,7 +59,7 @@ Certifique-se de ter o seguinte instalado:
 #### 2. Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/elizalap/teste-back-end-jr-php.git
 cd med_appointment_backend
 ```
 

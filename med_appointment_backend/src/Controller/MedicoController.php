@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Medico;
+use App\Entity\Hospital;
 use App\Repository\MedicoRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ class MedicoController extends AbstractController
         $medicos = $repository->findAll();
 
         foreach ($medicos as $medico) {
-            $result = [
+            $result[] = [
                 'id' => $medico->getId(),
                 'nome' => $medico->getNome(),
                 'especialidade' => $medico->getEspecialidade(),
@@ -33,13 +34,14 @@ class MedicoController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $medico = new Medico();
+        $hospital = $entityManager->getRepository(Hospital::class)->find($data['hospital_id']);
 
+        $medico = new Medico();
         $medico->setNome($data['nome']);
         $medico->setEspecialidade($data['especialidade']);
-        $medico->setHospital($data['hospital']);
+        $medico->setHospital($hospital);
 
-        $entityManager->persist($medicos);
+        $entityManager->persist($medico);
         $entityManager->flush();
 
         return new JsonResponse(['status' => 'Medico criado'],201);
@@ -50,17 +52,19 @@ class MedicoController extends AbstractController
     {
         $medico = $repository->find($id);
         if (!$medico) {
-            return new JsonResponse(['error' => 'Médico não existe'], 404);
+            return new JsonResponse(['error' => 'Medico não existe'], 404);
         }
 
         $data = json_decode($request->getContent(), true);
+        $hospital = $entityManager->getRepository(Hospital::class)->find($data['hospital_id']);
+
         $medico->setNome($data['nome']);
         $medico->setEspecialidade($data['especialidade']);
-        $medico->setHospital($data['hospital']);
+        $medico->setHospital($hospital);
 
         $entityManager->flush();
 
-        return new JsonResponse(['status' => 'Médico atualizado']);
+        return new JsonResponse(['status' => 'Medico atualizado']);
     }
 
     #[Route('/medico/{id}', methods: ['DELETE'])]
@@ -74,7 +78,7 @@ class MedicoController extends AbstractController
         $entityManager->remove($result);
         $entityManager->flush();
 
-        return JsonResponse(['status' => 'Medico excluido com sucesso'], 201);
+        return new JsonResponse(['status' => 'Medico excluido com sucesso'], 201);
 
     }
 }

@@ -19,7 +19,7 @@ class HospitalController extends AbstractController
         $hospitais = $repository->findAll();
 
         foreach ($hospitais as $hospital) {
-            $result = [
+            $result[] = [
                 'id' => $hospital->getId(),
                 'nome' => $hospital->getNome(),
                 'endereco' => $hospital->getEndereco(),
@@ -48,7 +48,7 @@ class HospitalController extends AbstractController
     {
         $hospital = $repository->find($id);
         if (!$hospital) {
-            return new JsonResponse(['error' => 'Hospital não existe'], 404);
+            return new JsonResponse(['error' => 'Hospital nao existe'], 404);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -65,13 +65,13 @@ class HospitalController extends AbstractController
     {
         $result = $repository->find($id);
         if(!$result){
-            return new JsonResponse(['error'=>'Hospital não existe'], 404);
+            return new JsonResponse(['error'=>'Hospital nao existe'], 404);
         }
 
         $entityManager->remove($result);
         $entityManager->flush();
 
-        return JsonResponse(['status' => 'Hospital excluido com sucesso'], 201);
+        return new JsonResponse(['status' => 'Hospital excluido com sucesso'], 201);
     
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BeneficiarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,17 @@ class Beneficiario
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $data_nascimento = null;
+
+    /**
+     * @var Collection<int, Consulta>
+     */
+    #[ORM\OneToMany(targetEntity: Consulta::class, mappedBy: 'beneficiario')]
+    private Collection $consultas;
+
+    public function __construct()
+    {
+        $this->consultas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +73,36 @@ class Beneficiario
     public function setDataNascimento(\DateTimeInterface $data_nascimento): static
     {
         $this->data_nascimento = $data_nascimento;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Consulta>
+     */
+    public function getConsultas(): Collection
+    {
+        return $this->consultas;
+    }
+
+    public function addConsulta(Consulta $consulta): static
+    {
+        if (!$this->consultas->contains($consulta)) {
+            $this->consultas->add($consulta);
+            $consulta->setBeneficiario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsulta(Consulta $consulta): static
+    {
+        if ($this->consultas->removeElement($consulta)) {
+            // set the owning side to null (unless already changed)
+            if ($consulta->getBeneficiario() === $this) {
+                $consulta->setBeneficiario(null);
+            }
+        }
 
         return $this;
     }
